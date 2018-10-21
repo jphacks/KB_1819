@@ -9,6 +9,10 @@ from OpenSSL import crypto
 import base64
 import requests
 
+import random
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
 app = Flask(__name__)
 
 
@@ -53,7 +57,7 @@ def callback():
             } \
         }')
 
-
+    material_amount_dictionary ={'たまご':2}
 
 
 
@@ -72,19 +76,6 @@ def callback():
             answer = event['request']['intent']['slots']['fruits']['value']
             response['response']['outputSpeech']['values']['value'] = '%sがお好きなんですね。素敵です。' % answer
 
-        elif event['request']['intent']['name'] == 'AddMaterialWithoutN':
-            if event['session']['sessionAttributes'] != null:
-                amount = event['session']['sessionAttributes']['amount']
-                material = event['request']['intent']['slots']['material'] ['value']
-                response['response']['outputSpeech']['values']['value'] = '何個追加materialn個追加'
-            else
-                response['response']['outputSpeech']['values']['value'] = '何個追加しますか'
-                response['sessionAttributes'] = {'material' : event['request']['intent']['slots']['material'] ['value']}
-
-        elif event['request']['intent']['name'] == 'AddNWithoutMaterial':
-            response['response']['outputSpeech']['values']['value'] = '何を追加しますか'
-            response['sessionAttributes'] = {'amount' : event['request']['intent']['slots']['amount'] ['value']}
-
         elif event['request']['intent']['name'] == 'Clova.GuideIntent':
             response['response']['outputSpeech']['values']['value'] = '挨拶に返事ができます。質問して、と話しかけると質問を出します。スキルを終了したい時は、キャンセル、と言って下さい。'
 
@@ -98,11 +89,11 @@ def callback():
         elif event['request']['intent']['name'] == 'Clova.NoIntent':
             response['response']['outputSpeech']['values']['value'] = '否定のインテントです。'
 
-
-
         elif event['request']['intent']['name'] == 'AddMaterial':
             amount = event['request']['intent']['slots']['amount'] ['value']
             material = event['request']['intent']['slots']['material'] ['value']
+
+            'Hello %s!' % 'World'
 
 
             sessionAttributes= event['session']['sessionAttributes']
@@ -118,7 +109,7 @@ def callback():
 
             response['sessionAttributes'] ={material:amount}
         elif event['request']['intent']['name'] == 'AskRecipe':
-            response['response']['outputSpeech']['values']['value'] = '今ある食材から考えるにカオマンガイがオススメです。'
+            response['response']['outputSpeech']['values']['value'] = '今ある食材から考えるに'+recipe(response['sessionAttributes'].keys())+'がオススメです。'
 
 
 
@@ -169,6 +160,17 @@ def validate_request(headers, body_raw):
         return False
 
     return True
+
+def recipe(e):
+    PASS=e[random.randrange(0,len(e))]+' '+e[random.randrange(0,len(e))]
+    driver=webdriver.Firefox()
+    driver.get('https://cookpad.com/')
+    driver.find_element_by_id('keyword').send_keys(PASS)
+    driver.find_element_by_id('submit_button').click()
+    recipe=driver.find_element_by_id('recipe_1').find_element_by_class_name('recipe-title')
+    return recipe.text
+
+
 
 class CekApi():
     def __init__(self, object):
