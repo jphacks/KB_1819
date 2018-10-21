@@ -10,11 +10,13 @@ import base64
 import requests
 
 import random
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
+import MySQLdb
 
 app = Flask(__name__)
+
+conn=MySQLdb.connect(db='clova',user='brown',passwd='password',charset='utf8mb4')
+c=conn.cursor(MySQLdb.cursors.DictCursor)
 
 
 @app.route('/', methods=['POST'])
@@ -91,8 +93,12 @@ def callback():
         elif event['request']['intent']['name'] == 'Clova.YesIntent':
             response['response']['outputSpeech']['values']['value'] = '承認のインテントだよ'
 
-        elif event['request']['intent']['name'] == 'Clova.NoIntent':
-            response['response']['outputSpeech']['values']['value'] = '否定のインテントです。'
+        elif event['request']['intent']['name'] == 'StorageCheck':
+            whatToSay='冷蔵庫には、'
+            for (i,x) in event['session']['sessionAttributes'].items():
+                whatToSay=whatToSay+i+'が'+str(x)+'個、'
+            whatToSay=whatToSay+'あります'
+            response['response']['outputSpeech']['values']['value'] =whatToSay
 
         elif event['request']['intent']['name'] == 'AddMaterial':
             amount = event['request']['intent']['slots']['amount']['value']
