@@ -20,8 +20,8 @@ LINEClovaのアプリケーションを作成。冷蔵庫の中身を教える�
 
 
 
-![資料1](https://github.com/jphacks/KB_1819/blob/master/material-before.jpg)
-![資料2](https://github.com/jphacks/KB_1819/blob/master/material-before.jpg)
+![資料1](https://github.com/jphacks/KB_1819/blob/master/material-before.pdf)
+![資料2](https://github.com/jphacks/KB_1819/blob/master/material-after.pdf)
 #### 2.「今家にある食材から作れる料理 」と言うと、家にある食材から作れる料理を数種類クックパッドから厳選！
 
 ![資料3](https://github.com/jphacks/KB_1819/blob/master/recipe-before.jpg)
