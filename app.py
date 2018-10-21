@@ -12,6 +12,7 @@ import requests
 import random
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -28,10 +29,16 @@ def callback():
     body = request.get_data(as_text=True)
     event = json.loads(body)
     print(event)
-
+    material_amount_dictionary ={
+        'たまご':2,
+        'レンコン':3,
+        '玉ねぎ':2,
+        '白菜':1
+    }
+    event['session']['sessionAttributes']=material_amount_dictionary
     response = json.loads('{ \
         "version": "0.1.0", \
-        "sessionAttributes": {}, \
+        "sessionAttributes":{},\
         "response": { \
             "outputSpeech": { \
                 "type": "SimpleSpeech", \
@@ -57,12 +64,10 @@ def callback():
             } \
         }')
 
-    material_amount_dictionary ={'たまご':2}
-
-
+    response['sessionAttributes']=event['session']['sessionAttributes']
 
     if event['request']['type'] == 'LaunchRequest':
-        response['response']['outputSpeech']['values']['value'] = '食材管理君が起動されました。話しかけて下さい。'
+        response['response']['outputSpeech']['values']['value'] = 'レシピ丸が起動されました。話しかけて下さい。'
     elif event['request']['type'] == 'IntentRequest':
         print(event['request']['intent']['name'])
         if event['request']['intent']['name'] == 'HelloIntent':
@@ -90,7 +95,7 @@ def callback():
             response['response']['outputSpeech']['values']['value'] = '否定のインテントです。'
 
         elif event['request']['intent']['name'] == 'AddMaterial':
-            amount = event['request']['intent']['slots']['amount'] ['value']
+            amount = event['request']['intent']['slots']['amount']['value']
             material = event['request']['intent']['slots']['material'] ['value']
 
             'Hello %s!' % 'World'
@@ -107,9 +112,10 @@ def callback():
                 response['response']['outputSpeech']['values']['value'] = material+'を'+amount+'個追加しました。'
 
 
-            response['sessionAttributes'] ={material:amount}
+            #response['sessionAttributes'] ={material:amount}
+            #response['sessionAttributes'][material]=amount
         elif event['request']['intent']['name'] == 'AskRecipe':
-            response['response']['outputSpeech']['values']['value'] = '今ある食材から考えるに'+recipe(response['sessionAttributes'].keys())+'がオススメです。'
+            response['response']['outputSpeech']['values']['value'] = '今ある食材から考えるに、'+recipe(response['sessionAttributes'].keys())+'がオススメです。'
 
 
 
@@ -162,13 +168,13 @@ def validate_request(headers, body_raw):
     return True
 
 def recipe(e):
+    e=list(e)
     PASS=e[random.randrange(0,len(e))]+' '+e[random.randrange(0,len(e))]
-    driver=webdriver.Firefox()
-    driver.get('https://cookpad.com/')
-    driver.find_element_by_id('keyword').send_keys(PASS)
-    driver.find_element_by_id('submit_button').click()
-    recipe=driver.find_element_by_id('recipe_1').find_element_by_class_name('recipe-title')
-    return recipe.text
+    #PASS=e[0]+' '+e[1]
+    r=requests.get('https://cookpad.com/search/'+PASS).text
+    soup=BeautifulSoup(r,'html.parser')
+    recipe=soup.find_all(class_='recipe-title')
+    return recipe[2].text
 
 
 
