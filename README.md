@@ -1,5 +1,6 @@
 # レシピまる
-![レシピ丸](https://youtu.be/i0bZLRvz1Pw)
+
+[デモ動画 はこちら](https://youtu.be/i0bZLRvz1Pw)
 
 ## 製品概要
 ### Food Tech
@@ -62,9 +63,6 @@ LINEClovaのアプリケーションを作成。冷蔵庫の中身を教える�
 #### デバイス
 * LINE CLOVA
 * 
-
-### 研究内容・事前開発プロダクト（任意）
-特にないです
 
 
 ### 独自開発技術（Hack Dayで開発したもの）
