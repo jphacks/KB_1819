@@ -1,5 +1,5 @@
 # レシピまる
-[![Product Name](image.png)](https://www.youtube.com/watch?v=G5rULR53uMk)
+![レシピ丸](https://youtu.be/i0bZLRvz1Pw)
 
 ## 製品概要
 ### Food Tech
@@ -17,13 +17,15 @@ LINEClovaのアプリケーションを作成。冷蔵庫の中身を教える�
 ### 特長
 
 #### 1. 『人参2本買って来たよ』などと言うと、いま家にある人参の本数に買って来た本数を足して、家にある食材を覚えさせることができる。減らすこともできる。
-/material-before.pdf
-/material-after.pdf
 
+
+
+![資料1](https://github.com/jphacks/KB_1819/blob/master/material-before.jpg)
+![資料2](https://github.com/jphacks/KB_1819/blob/master/material-before.jpg)
 #### 2.「今家にある食材から作れる料理 」と言うと、家にある食材から作れる料理を数種類クックパッドから厳選！
 
-/recipe-before.jpg
-/recipe-after.jpg
+![資料3](https://github.com/jphacks/KB_1819/blob/master/recipe-before.jpg)
+![資料4](https://github.com/jphacks/KB_1819/blob/master/recipe-after.jpg)
 
 
 #### 3.「今ある食材は？」と話しかけることで登録されてある食材の個数と量がわかる
