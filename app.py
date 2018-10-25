@@ -15,9 +15,6 @@ import MySQLdb
 
 app = Flask(__name__)
 
-conn=MySQLdb.connect(db='clova',user='brown',passwd='password',charset='utf8mb4')
-c=conn.cursor(MySQLdb.cursors.DictCursor)
-
 
 @app.route('/', methods=['POST'])
 def callback():
